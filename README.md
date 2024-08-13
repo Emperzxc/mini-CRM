@@ -30,9 +30,16 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
    ```bash
    composer install
    ```
+
+   Require Admin LTE package using composer.
    ```bash
-   npm install admin-lte@^3.0 --save
+   composer require jeroennoten/laravel-adminlte
    ```
+    
+    Install the required package resources using the next command
+    ```bash
+    php artisan adminlte:install
+    ```
 3. Set Up Environment File
 
    Copy the example environment file and update the configurations:
