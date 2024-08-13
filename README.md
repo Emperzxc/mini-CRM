@@ -22,7 +22,7 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
 ### Steps
 1. Clone the Repository
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Emperzxc/mini-CRM
    cd mini-crm
    ```
 
