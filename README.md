@@ -28,6 +28,9 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
    ```bash
    composer install
    ```
+   ```bash
+   npm install admin-lte@^3.0 --save
+   ```
 3. Set Up Environment File
 
    Copy the example environment file and update the configurations:
@@ -61,6 +64,10 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
    
     ```bash
     php artisan serve
+    ```
+     ```bash
+    npm install
+    npm run dev
     ```
 
 
