@@ -9,6 +9,7 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
 * Configuration
 * Usage
 * Features
+* License
 
 ## Installation
 ### Prereuisites
