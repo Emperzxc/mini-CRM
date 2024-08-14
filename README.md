@@ -83,7 +83,11 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
     php artisan db:seed --class=AdminUserSeeder
     php artisan db:seed --class=CompanySeeder
     ```
-7. Serve the Application
+7. Link the storage to view image
+```bash
+php artisan storage:link
+```
+8. Serve the Application
    
     ```bash
     php artisan serve
