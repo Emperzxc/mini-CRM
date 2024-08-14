@@ -30,7 +30,7 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
    ```bash
    composer install
    ```
-    Incase composer install produces eerrors. Try running this command:
+    Incase composer install produce errors. Try running this command:
      ```bash
    composer require mongodb/laravel-mongodb
    ```
