@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
         $query = Company::query();
