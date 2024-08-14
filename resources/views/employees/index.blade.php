@@ -16,37 +16,39 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="employeesTable" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>@lang('messages.id')</th>
-                        <th>@lang('messages.name')</th>
-                        <th>@lang('messages.email')</th>
-                        <th>@lang('messages.phone')</th>
-                        <th>@lang('messages.company')</th>
-                        <th>@lang('messages.actions')</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($employees as $employee)
+            <div class="table-responsive">
+                <table id="employeesTable" class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ $employee->id }}</td>
-                            <td>{{ $employee->name}}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->phone }}</td>
-                            <td>{{ $employee->company->name ?? 'N/A' }}</td>
-                            <td>
-                                <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">@lang('messages.edit')</a>
-                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">@lang('messages.delete')</button>
-                                </form>
-                            </td>
+                            <th>@lang('messages.id')</th>
+                            <th>@lang('messages.name')</th>
+                            <th>@lang('messages.email')</th>
+                            <th>@lang('messages.phone')</th>
+                            <th>@lang('messages.company')</th>
+                            <th>@lang('messages.actions')</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach($employees as $employee)
+                            <tr>
+                                <td>{{ $employee->id }}</td>
+                                <td>{{ $employee->name}}</td>
+                                <td>{{ $employee->email }}</td>
+                                <td>{{ $employee->phone }}</td>
+                                <td>{{ $employee->company->name ?? 'N/A' }}</td>
+                                <td>
+                                    <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-warning btn-sm">@lang('messages.edit')</a>
+                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">@lang('messages.delete')</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- /.card-body -->
     </div>
