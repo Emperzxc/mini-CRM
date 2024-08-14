@@ -100,6 +100,17 @@ php artisan storage:link
 ## Configuration
 
 * **Email Notifications**: Configure Mailtrap in your .env file for sending email notifications.
+    Sample email configuration:
+    ```bash
+    MAIL_MAILER=smtp
+    MAIL_HOST=sandbox.smtp.mailtrap.io
+    MAIL_PORT=2525
+    MAIL_USERNAME=1a59c0cfbc97d6
+    MAIL_PASSWORD=********c7b1
+    MAIL_ENCRYPTION=null
+    MAIL_FROM_ADDRESS="MiniCRM@example.com"
+    MAIL_FROM_NAME="${APP_NAME}"
+    ```
 
 ## Usage
 
