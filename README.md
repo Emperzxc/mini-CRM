@@ -35,16 +35,17 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
                 sudo pecl install mongodb
              ```
 
-```bash
- composer require mongodb/laravel-mongodb
-```
+   ```bash
+   composer require mongodb/laravel-mongodb
+   ```
             
    Require Admin LTE package using composer.
    ```bash
    composer require jeroennoten/laravel-adminlte
    ```
     
-    Install the required package resources using the next command
+    Install the required package resources using the next command.
+
     ```bash
     php artisan adminlte:install
     ```
