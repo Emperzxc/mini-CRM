@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $employees = EmployeeResource::collection(Employee::all()); 
