@@ -60,6 +60,12 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
     DB_USERNAME=
     DB_PASSWORD=
     DB_URI=mongodb://localhost:27017
+
+    SESSION_DRIVER=file
+    SESSION_LIFETIME=120
+    SESSION_ENCRYPT=false
+    SESSION_PATH=/
+    SESSION_DOMAIN=null
     ```
 4. Generate Application Key
    
@@ -69,7 +75,7 @@ Mini CRM is a mini Customer Relationship Management system built using Laravel 1
 5. Run Migrations
    
     ```bash
-    php artisan migrate
+    php artisan migrate:refresh
     ```
      
 6. Serve the Application
