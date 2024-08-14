@@ -33,45 +33,45 @@
             @if ($companies->count())
                 <!-- Display total number of companies -->
                 <p class="text-muted">@lang('messages.total_of') {{ $companies->total() }} @lang('messages.companies')</p>
-
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>@lang('messages.id')</th>
-                            <th>@lang('messages.name')</th>
-                            <th>@lang('messages.email')</th>
-                            <th>@lang('messages.logo')</th>
-                            <th>@lang('messages.website')</th>
-                            <th>@lang('messages.actions')</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($companies as $company)
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
-                                <td>{{ $company->id }}</td>
-                                <td>{{ $company->name }}</td>
-                                <td>{{ $company->email }}</td>
-                                <td style="width:120px;">
-                                    @if($company->logo)
-                                        <img src="{{Storage::url('logos/' . basename($company->logo)) }}" alt="Company Logo" class="img-thumbnail" style="max-width: 150px;">
-                                    @else
-                                        No logo
-                                    @endif
-                                </td>
-                                <td>{{ $company->website }}</td>
-                                <td style="width:170px;">
-                                    <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-warning btn-sm">@lang('messages.edit')</a>
-                                    <form action="{{ route('companies.destroy', $company->id) }}" method="POST" style="display: inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">@lang('messages.delete')</button>
-                                    </form>
-                                </td>
+                                <th>@lang('messages.id')</th>
+                                <th>@lang('messages.name')</th>
+                                <th>@lang('messages.email')</th>
+                                <th>@lang('messages.logo')</th>
+                                <th>@lang('messages.website')</th>
+                                <th>@lang('messages.actions')</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                            @foreach ($companies as $company)
+                                <tr>
+                                    <td>{{ $company->id }}</td>
+                                    <td>{{ $company->name }}</td>
+                                    <td>{{ $company->email }}</td>
+                                    <td style="width:120px;">
+                                        @if($company->logo)
+                                            <img src="{{Storage::url('logos/' . basename($company->logo)) }}" alt="Company Logo" class="img-thumbnail" style="max-width: 150px;">
+                                        @else
+                                            No logo
+                                        @endif
+                                    </td>
+                                    <td>{{ $company->website }}</td>
+                                    <td style="width:170px;">
+                                        <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-warning btn-sm">@lang('messages.edit')</a>
+                                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">@lang('messages.delete')</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 <!-- Pagination -->
                 <div class="d-flex justify-content-between mt-3">
                     <div>
