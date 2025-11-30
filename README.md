@@ -12,45 +12,41 @@ Comprehensive documentation for the Career Driver HQ (CDHQ) multi-tenant recruit
 
 ### ✔ 1.2 System Architecture Diagram
 ```mermaid
-flowchart TB
-  classDef svc fill:#e8f3ff,stroke:#4c8ed9,stroke-width:1px;
-  classDef data fill:#fef3c7,stroke:#d97706,stroke-width:1px;
-  classDef ext fill:#f3f4f6,stroke:#6b7280,stroke-width:1px;
-
+flowchart LR
   subgraph Users
-    A[Admin/Manager]:::ext
-    R[Recruiter]:::ext
-    C[Customer Portal User]:::ext
-    Z[Zapier · Meta · Stripe · Zoom]:::ext
+    Admin[Admin/Manager]
+    Recruiter[Recruiter]
+    Customer[Customer Portal User]
+    Integrations[Zapier / Meta / Stripe / Zoom]
   end
 
-  subgraph Frontend [React + TypeScript + Shadcn UI]
-    UI[SPA (Vite)]:::svc
-    State[TanStack Query · RHF · Zod]:::svc
+  subgraph Frontend
+    UI[Frontend: React + TS + Shadcn]
+    State[TanStack Query / RHF / Zod]
   end
 
-  subgraph Backend [Node.js · Express · Drizzle]
-    Auth[Replit + Email Auth<br/>Sessions · MFA · Lockout]:::svc
-    API[REST API · RBAC · CSRF]:::svc
-    Jobs[Lead & Fulfillment Services]:::svc
-    Webhooks[Webhook Lab · Stripe · Zoom · Zapier]:::svc
-    Cache[Cache · Idempotency · Rate Limits]:::svc
+  subgraph Backend
+    Auth[Auth + Sessions + MFA]
+    API[REST API + RBAC + CSRF]
+    Services[Lead & Fulfillment Services]
+    Webhooks[Webhooks :Zapier/Stripe/Zoom]
+    Cache[Cache + Idempotency]
   end
 
-  subgraph Data [PostgreSQL (Neon/Replit) + Storage]
-    Schema[(Drizzle Schema)]:::data
-    Sessions[(Session Store)]:::data
-    Files[(Attachments/Object Storage)]:::data
+  subgraph Data
+    Schema[(Drizzle Schema)]
+    SessionStore[(Session Store)]
+    Files[(Attachments / Object Storage)]
   end
 
-  A & R & C --> UI
-  UI --> State --> API
-  Z --> Webhooks
+  Admin & Recruiter & Customer --> UI
+  Integrations --> Webhooks
+  UI --> API
   API --> Auth
-  API --> Jobs
+  API --> Services
   API --> Cache
-  Auth --> Sessions
-  Jobs --> Schema
+  Auth --> SessionStore
+  Services --> Schema
   Cache --> Schema
   Webhooks --> Schema
   Schema <-->|migrations| Backend
@@ -80,29 +76,29 @@ sequenceDiagram
 - Lead purchase flow
 ```mermaid
 flowchart LR
-  Cust[Customer Portal] -->|Select package| LP[POST /api/lead-purchases]
-  LP --> Pay[Stripe Checkout/Connect]
-  Pay --> LP
-  LP --> Credits[Ledger: client_credits + credit_transactions]
-  Credits --> Fulfill[order_fulfillment_tracking<br/>+ admin_fulfillment_order_tracking]
-  Fulfill --> Deliver[Lead delivery + webhook trigger]
-  Deliver --> Cust
+  Customer[Customer Portal] -->|Select package| Purchase[POST /api/lead-purchases]
+  Purchase --> Checkout[Stripe Checkout/Connect]
+  Checkout --> Purchase
+  Purchase --> Ledger[client_credits + credit_transactions]
+  Ledger --> Fulfill[order_fulfillment_tracking + admin_fulfillment_order_tracking]
+  Fulfill --> Delivery[Lead delivery + webhook trigger]
+  Delivery --> Customer
 ```
 - Candidate management flow
 ```mermaid
 flowchart TD
-  Intake[Lead/Candidate created (UI or webhook)] --> Normalize[Validation + dedupe + status assignment]
-  Normalize --> Route[Area/client/subsidiary routing]
-  Route --> Pipeline[Statuses + master/global config]
-  Pipeline --> Activity[activity_log + notifications]
-  Activity --> Reports[Dashboard/analytics export]
+  Intake["Lead or Candidate created (UI or webhook)"] --> Normalize["Validate + dedupe + assign status"]
+  Normalize --> Route["Route to client/area/subsidiary"]
+  Route --> Pipeline["Pipeline statuses (master/global)"]
+  Pipeline --> Activity["activity_log + notifications"]
+  Activity --> Reports["Dashboard metrics + exports"]
 ```
 - Interview scheduling flow
 ```mermaid
 sequenceDiagram
   participant R as Recruiter
   participant FE as Scheduler UI
-  participant BE as /interviews
+  participant BE as Interviews API
   participant Zoom as Zoom S2S OAuth
   participant Mail as MailerSend/SendGrid
   R->>FE: Pick slot + candidate
@@ -116,12 +112,12 @@ sequenceDiagram
 - Webhook flow (Meta → Zapier → CDHQ)
 ```mermaid
 flowchart LR
-  Meta[Meta Lead Ads] --> Zap[Zapier code step<br/>HMAC signature + Idempotency-Key]
-  Zap --> Webhook[/api/webhook/zapier]
-  Webhook --> Verify[Verify HMAC/Token<br/>+ validate payload schema]
-  Verify --> RouteLead[Route by client_key/campaign<br/>+ tenant isolation]
-  RouteLead --> Persist[Create candidate<br/>+ activity_log + consent]
-  Persist --> Ack[Fast ACK <500ms<br/>idempotency cache]
+  Meta[Meta Lead Ads] --> Zap["Zapier code step - HMAC + Idempotency-Key"]
+  Zap --> Endpoint[[/api/webhook/zapier]]
+  Endpoint --> Verify["Verify HMAC or token - Validate schema"]
+  Verify --> RouteLead["Route by client_key/campaign - Tenant isolation"]
+  RouteLead --> Persist["Create candidate - activity_log + consent"]
+  Persist --> Ack["ACK < 500ms - Idempotency cache"]
   Ack --> Zap
 ```
 
